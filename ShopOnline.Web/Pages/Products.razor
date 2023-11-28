@@ -1,7 +1,11 @@
 ﻿@page "/"
 @inherits ProductsBase
-<h3>Products</h3>
 
-@code {
-
+@if(Products == null)
+{
+	<h3>Loading products...</h3>
+}
+else
+{
+	<h3 class="md-5">Products</h3>
 }
