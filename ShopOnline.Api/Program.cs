@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using ShopOnline.Api.Data;
 using ShopOnline.Api.Repositories;
 using ShopOnline.Api.Repositories.Contracts;
@@ -17,6 +18,7 @@ builder.Services.AddDbContextPool<ShopOnlineDbContext>(options =>
 	);
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
 
 var app = builder.Build();
 
@@ -26,6 +28,12 @@ if (app.Environment.IsDevelopment())
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
+
+app.UseCors(policy =>
+	policy.WithOrigins("http://localhost:7234", "https://localhost:7234")
+	.AllowAnyMethod()
+	.WithHeaders(HeaderNames.ContentType)
+);
 
 app.UseHttpsRedirection();
 
